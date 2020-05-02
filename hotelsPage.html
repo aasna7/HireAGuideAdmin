@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>Hotels & Places</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <style>
+      .hotelsplaces,
+      .addhotelsplaces {
+        width: 100%;
+        height: 100vh;
+      }
+
+      input,
+      textarea {
+        margin-bottom: 5px;
+        width: 100%;
+        display: block;
+        border: 1px solid #999;
+        border-radius: 10px;
+        padding: 6px 30px;
+      }
+
+      .form-submit {
+        background: rgb(34, 167, 34);
+        font-size: 20px;
+        color: white;
+      }
+
+      #tab-btn {
+        display: -webkit-flex;
+        display: -moz-flex;
+        display: -ms-flex;
+        display: -o-flex;
+        width: 100%;
+        justify-content: center;
+      }
+
+      #tab-btn .active {
+        background-color: white;
+        border-bottom: 1px solid yellowgreen;
+        color: rgb(94, 93, 93);
+      }
+
+      #tab-btn-list {
+        display: -webkit-flex;
+        display: -moz-flex;
+        display: -ms-flex;
+        display: -o-flex;
+        width: 100%;
+        justify-content: center;
+      }
+
+      #tab-btn-list .active {
+        background-color: white;
+        border-bottom: 1px solid yellowgreen;
+        color: rgb(94, 93, 93);
+      }
+
+      .hotelslist,
+      .placeslist {
+        display: block;
+        width: 100%;
+        text-align: center;
+        background-color: yellowgreen;
+        color: white;
+        font-size: 25px;
+        text-decoration: none;
+        padding: 6px 20px;
+        margin-bottom: 2%;
+      }
+
+      .addhotel,
+      .addplace {
+        display: block;
+        width: 100%;
+        text-align: center;
+        background-color: yellowgreen;
+        color: white;
+        font-size: 25px;
+        text-decoration: none;
+        padding: 6px 20px;
+        margin-bottom: 2%;
+      }
+      a:hover {
+        text-decoration: none;
+        color: gray;
+      }
+
+      .listofplaces {
+        display: none;
+      }
+
+      .addplace-form {
+        display: none;
+      }
+    </style>
+    <script src="https://www.gstatic.com/firebasejs/5.5.3/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.5.3/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.7.2/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-storage.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript">
+      $(document).ready(function () {
+        $(".addplace").click(function () {
+          $(".addplace-form").show();
+          $(".addhotel-form").hide();
+          $(".addplace").addClass("active");
+          $(".addhotel").removeClass("active");
+        });
+        $(".addhotel").click(function () {
+          $(".addhotel-form").show();
+          $(".addplace-form").hide();
+          $(".addhotel").addClass("active");
+          $(".addplace").removeClass("active");
+        });
+        $(".hotelslist").click(function () {
+          $(".listofhotels").show();
+          $(".listofplaces").hide();
+          $(".hotelslist").addClass("active");
+          $(".placeslist").removeClass("active");
+        });
+        $(".placeslist").click(function () {
+          $(".listofplaces").show();
+          $(".listofhotels").hide();
+          $(".placeslist").addClass("active");
+          $(".hotelslist").removeClass("active");
+        });
+      });
+    </script>
+  </head>
+  <body style="overflow-y: hidden;">
+    <div class="nav-bar">
+      <nav class="navbar navbar-expand-lg navbar navbar-dark bg-dark fixed-top">
+        <a href="#" class="navbar-brand"
+          ><img src=images/hireaguidelogo.png width=50px> HireAGuide</a
+        >
+
+        <div class="collapse navbar-collapse" id="navbarCollapse1">
+          <div class="navbar-nav">
+            <a href="#" class="nav-item nav-link">Home</a>
+            <a href="guidePage.html" class="nav-item nav-link">Guides</a>
+            <a href="touristPage.html" class="nav-item nav-link">Tourists</a>
+            <a href="hotelsPage.html" class="nav-item nav-link active"
+              >Places & Hotels</a
+            >
+          </div>
+          <form class="form-inline ml-auto">
+            <input
+              type="text"
+              class="form-control mr-sm-2"
+              placeholder="Search"
+            />
+            <button type="submit" class="btn btn-outline-light">Search</button>
+          </form>
+          <button
+            class="btn btn-primary"
+            style="background-color: rgb(34, 167, 34); padding-left: 20px;"
+            id="logOut"
+          >
+            Log Out?
+          </button>
+        </div>
+      </nav>
+    </div>
+    <div class="row no-gutters">
+      <div
+        class="col"
+        style="
+          margin-left: 2%;
+          margin-right: 2%;
+          border-right: 1px solid black;
+          overflow-y: scroll;
+          height: 100%;
+        "
+      >
+        <div class="hotelsplaces" style="margin-top: 15%;">
+          <h3>Hotels and Places</h3>
+          <div id="tab-btn-list">
+            <a href="#" class="hotelslist active">Hotels</a>
+            <a href="#" class="placeslist">Places</a>
+          </div>
+
+          <div class="listofhotels">
+            <div id="listofhotels_"></div>
+          </div>
+          <div class="listofplaces">
+            <div id="listofplaces_"></div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="col"
+        style="margin-left: 2%; margin-right: 2%; overflow: hidden;"
+      >
+        <div class="addhotelsplaces" style="margin-top: 15%;">
+          <div id="tab-btn">
+            <a href="#" class="addhotel active">Add Hotel</a>
+            <a href="#" class="addplace">Add Place</a>
+          </div>
+          <div class="addhotel-form">
+            <h3 style="margin-bottom: 5px;">
+              Add Hotel Details
+            </h3>
+
+            <input
+              type="text"
+              name="hotelname"
+              id="hotel_name"
+              placeholder="Enter Hotel Name"
+              required
+              autofocus
+            /><br />
+
+            <input
+              type="text"
+              name="hotellocation"
+              id="hotel_location"
+              placeholder="Enter Hotel Location"
+              required
+            />
+            <br />
+            <textarea
+              id="hotel_description"
+              rows="4"
+              cols="30"
+              placeholder="Enter Hotel Description"
+              required
+            ></textarea>
+            <br />
+
+            <input type="file" id="hotel_image" />
+            <br />
+            <input
+              type="submit"
+              name="addhotelbtn"
+              id="addhotelbtn"
+              class="form-submit"
+              value="Add Hotel"
+            />
+          </div>
+
+          <div class="addplace-form">
+            <h3 class="form-title" style="margin-bottom: 5px;">
+              Add Place Details
+            </h3>
+
+            <input
+              type="text"
+              name="placename"
+              id="place_name"
+              placeholder="Enter Place Name"
+              required
+              autofocus
+            /><br />
+
+            <input
+              type="text"
+              name="placelocation"
+              id="place_location"
+              placeholder="Enter Place Location"
+              required
+            />
+            <br />
+            <textarea
+              id="place_description"
+              rows="4"
+              cols="30"
+              placeholder="Enter Place Description"
+              required
+            ></textarea>
+            <br />
+            <input type="file" id="place_image" />
+            <br />
+            <input
+              type="submit"
+              name="addplacebtn"
+              id="addplacebtn"
+              class="form-submit"
+              value="Add Place"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="dist/js/hotelsPage.js"></script>
+  </body>
+</html>

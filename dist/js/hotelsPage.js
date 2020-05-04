@@ -43,12 +43,45 @@ function renderUser(doc) {
   hotelDescriptionList.textContent =
     "Hotel Description: " + doc.data().hotelDescription;
   editHotelDetails.innerHTML = "Edit";
+  editHotelDetails.style.fontWeight = "bold";
   editHotelDetails.style.marginRight = "10px";
+  editHotelDetails.style.width = "80px";
+  editHotelDetails.style.height = "30px";
   deleteHotelDetails.innerHTML = "Delete";
+  deleteHotelDetails.style.fontWeight = "bold";
+  deleteHotelDetails.style.width = "80px";
+  deleteHotelDetails.style.height = "30px";
   imgHotelList.src = doc.data().hotelImage;
   imgHotelList.style.width = "120px";
   imgHotelList.style.height = "160px";
   imgHotelList.style.paddingRight = "10px";
+
+  deleteHotelDetails.addEventListener("click", function () {
+    var confirmDelete = confirm("Are you sure you want to delete this detail?");
+    if (confirmDelete == true) {
+      let collectionRef = firebase1.collection("hotels");
+
+      collectionRef
+        .where("hotelName", "==", doc.data().hotelName)
+        .get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            doc.ref
+              .delete()
+              .then(() => {
+                console.log("Document successfully deleted!");
+                window.location.href = "hotelsPage.html";
+              })
+              .catch(function (error) {
+                console.error("Error removing document: ", error);
+              });
+          });
+        })
+        .catch(function (error) {
+          console.log("Error getting documents: ", error);
+        });
+    }
+  });
 
   divGuide.appendChild(hotelNameList);
   divGuide.appendChild(hotelLocationList);
@@ -138,6 +171,7 @@ const hotelName = document.querySelector("#hotel_name");
 const hotelLocation = document.querySelector("#hotel_location");
 const hotelDescription = document.querySelector("#hotel_description");
 const hotelImage = document.querySelector("#hotel_image");
+const hotelDemoImage = document.querySelector("#hoteldemoimage");
 const addHotelBtn = document.querySelector("#addhotelbtn");
 const testBtn = document.getElementById("test");
 var imageHotelURL;
@@ -150,34 +184,48 @@ const placeDescription = document.querySelector("#place_description");
 const placeImage = document.querySelector("#place_image");
 const addPlaceBtn = document.querySelector("#addplacebtn");
 
-function addHotelImage() {
-  var imageFile = hotelImage.files[0];
-  var storageRef = firestorage.ref("hotelImages/" + imageFile.name);
-  var refer = storageRef.put(imageFile);
-  refer.snapshot.ref.getDownloadURL().then(function (downloadURL) {
-    console.log("File available at: ", downloadURL);
-    imageHotelURL = downloadURL;
-  });
-}
+hotelImage.addEventListener("change", function (e) {
+  var file = e.target.files[0];
+  var storageref = firestorage.ref("hotelImages/" + file.name);
+  var refer = storageref.put(file);
+  refer.snapshot.ref
+    .getDownloadURL()
+    .then(function (downloadURL) {
+      console.log("File available at", downloadURL);
+      imageHotelURL = downloadURL;
+    })
+    .catch(function (error) {
+      console.log(error);
+      alert(error);
+    });
+});
 
-function addPlaceImage() {
-  var imageFile = placeImage.files[0];
-  var storageRef = firestorage.ref("placesImages/" + imageFile.name);
-  var refer = storageRef.put(imageFile);
-  refer.snapshot.ref.getDownloadURL().then(function (downloadURL) {
-    console.log("File available at: ", downloadURL);
-    imagePlaceURL = downloadURL;
-  });
-}
+placeImage.addEventListener("change", function (e) {
+  var file = e.target.files[0];
+  var storageref = firestorage.ref("placesImages/" + file.name);
+  var refer = storageref.put(file);
+  refer.snapshot.ref
+    .getDownloadURL()
+    .then(function (downloadURL) {
+      console.log("File available at", downloadURL);
+      imagePlaceURL = downloadURL;
+    })
+    .catch(function (error) {
+      console.log(error);
+      alert(error);
+    });
+});
 
 addHotelBtn.addEventListener("click", function (e) {
   e.preventDefault();
-  addHotelImage();
+
   window.alert("hotel form");
   const hotelName_ = hotelName.value;
   const hotelLocation_ = hotelLocation.value;
   const hotelDescription_ = hotelDescription.value;
   const hotelImage_ = imageHotelURL;
+  console.log("working till here");
+  console.log("image link is: " + imageHotelURL);
   firebase1
     .collection("hotels")
     .doc()
@@ -185,10 +233,11 @@ addHotelBtn.addEventListener("click", function (e) {
       hotelName: hotelName_,
       hotelLocation: hotelLocation_,
       hotelDescription: hotelDescription_,
-      hotelImage: imageHotelURL,
+      hotelImage: hotelImage_,
     })
     .then(function () {
       console.log("Document successfully written!");
+      window.location.href = "hotelsPage.html";
     })
     .catch(function (error) {
       console.error("Error writing document: ", error);
@@ -197,7 +246,7 @@ addHotelBtn.addEventListener("click", function (e) {
 
 addPlaceBtn.addEventListener("click", function (e) {
   e.preventDefault();
-  addPlaceImage();
+
   const placeName_ = placeName.value;
   const placeLocation_ = placeLocation.value;
   const placeDescription_ = placeDescription.value;
@@ -212,6 +261,7 @@ addPlaceBtn.addEventListener("click", function (e) {
     })
     .then(function () {
       console.log("Document successfully written!");
+      window.location.href = "hotelsPage.html";
     })
     .catch(function (error) {
       console.log("Error writting document: ", error);

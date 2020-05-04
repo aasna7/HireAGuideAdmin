@@ -20,6 +20,8 @@ firebase1.settings(settings);
 const hotelList = document.querySelector("#listofhotels_");
 const placeList = document.querySelector("#listofplaces_");
 function renderUser(doc) {
+  var card = document.createElement("div");
+  card.className = "card";
   var row = document.createElement("div");
   row.className = "row";
   var imageCol = document.createElement("div");
@@ -32,13 +34,17 @@ function renderUser(doc) {
   let hotelNameList = document.createElement("p");
   let hotelLocationList = document.createElement("p");
   let hotelDescriptionList = document.createElement("p");
+  let editHotelDetails = document.createElement("button");
+  let deleteHotelDetails = document.createElement("button");
   let brLine = document.createElement("br");
   let hrLine = document.createElement("hr");
   hotelNameList.textContent = "Hotel Name: " + doc.data().hotelName;
   hotelLocationList.textContent = "Hotel Location: " + doc.data().hotelLocation;
   hotelDescriptionList.textContent =
     "Hotel Description: " + doc.data().hotelDescription;
-
+  editHotelDetails.innerHTML = "Edit";
+  editHotelDetails.style.marginRight = "10px";
+  deleteHotelDetails.innerHTML = "Delete";
   imgHotelList.src = doc.data().hotelImage;
   imgHotelList.style.width = "120px";
   imgHotelList.style.height = "160px";
@@ -47,6 +53,8 @@ function renderUser(doc) {
   divGuide.appendChild(hotelNameList);
   divGuide.appendChild(hotelLocationList);
   divGuide.appendChild(hotelDescriptionList);
+  divGuide.appendChild(editHotelDetails);
+  divGuide.appendChild(deleteHotelDetails);
   divGuide.appendChild(hrLine);
   divGuide.appendChild(brLine);
   divImg.appendChild(imgHotelList);
@@ -57,7 +65,8 @@ function renderUser(doc) {
   row.appendChild(imageCol);
   row.appendChild(detailsCol);
   row.appendChild(hrLine);
-  hotelList.appendChild(row);
+  card.appendChild(row);
+  hotelList.appendChild(card);
 }
 
 firebase1
@@ -70,6 +79,8 @@ firebase1
   });
 
 function renderUser1(doc) {
+  var card = document.createElement("div");
+  card.className = "card";
   var rowPlace = document.createElement("div");
   rowPlace.className = "row";
   var imageColPlace = document.createElement("div");
@@ -82,31 +93,35 @@ function renderUser1(doc) {
   let placeNameList = document.createElement("p");
   let placeLocationList = document.createElement("p");
   let placeDescriptionList = document.createElement("p");
+  let editPlaceDetails = document.createElement("button");
+  let deletePlaceDetails = document.createElement("button");
   let brLine = document.createElement("br");
   let hrLine = document.createElement("hr");
   placeNameList.textContent = "Place Name: " + doc.data().placeName;
   placeLocationList.textContent = "Place Location: " + doc.data().placeLocation;
   placeDescriptionList.textContent =
     "Place Description: " + doc.data().placeDescription;
-
+  editPlaceDetails.innerHTML = "Edit";
+  editPlaceDetails.style.marginRight = "10px";
+  deletePlaceDetails.innerHTML = "Delete";
   imgPlaceList.src = doc.data().placeImage;
   imgPlaceList.style.width = "120px";
-  imgPlaceList.style.height = "180px";
+  imgPlaceList.style.height = "160px";
   imgPlaceList.style.paddingRight = "10px";
 
   divPlace.appendChild(placeNameList);
   divPlace.appendChild(placeLocationList);
   divPlace.appendChild(placeDescriptionList);
-  divPlace.appendChild(hrLine);
-  divPlace.appendChild(brLine);
+  divPlace.appendChild(editPlaceDetails);
+  divPlace.appendChild(deletePlaceDetails);
   divImgPlace.appendChild(imgPlaceList);
-  divImgPlace.appendChild(hrLine);
 
   imageColPlace.appendChild(divImgPlace);
   detailsColPlace.appendChild(divPlace);
   rowPlace.appendChild(imageColPlace);
   rowPlace.appendChild(detailsColPlace);
-  placeList.appendChild(rowPlace);
+  card.appendChild(rowPlace);
+  placeList.appendChild(card);
 }
 
 firebase1

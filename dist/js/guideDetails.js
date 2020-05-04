@@ -29,6 +29,8 @@ logOut.addEventListener("click", function () {
 
 function renderUser(doc) {
   var isVerified_ = false;
+  var card = document.createElement("div");
+  card.className = "card";
   var row = document.createElement("div");
   row.className = "row";
   var imageCol = document.createElement("div");
@@ -61,15 +63,22 @@ function renderUser(doc) {
   isVeified12.textContent = "isVerified: " + doc.data().isVerified;
   licenseGuide.textContent = "License ID: " + doc.data().licenseId;
   viewGuide.innerHTML = "View Details";
+  viewGuide.style.marginRight = "10px";
+  viewGuide.style.width = "40%";
+  viewGuide.style.padding = "5px";
   verifyGuide.innerHTML = "Verify";
+  verifyGuide.style.padding = "5px";
+  verifyGuide.style.width = "40%";
+  verifyGuide.style.background = "#22a722";
   imgGuide.src = doc.data().profilePicture;
   imgGuide.style.width = "140px";
   imgGuide.style.height = "180px";
   imgGuide.style.paddingRight = "20px";
   imageCol.style.paddingRight = "10px";
   const email_ = doc.data().email;
+  localStorage.setItem("guideEmail", email_);
   viewGuide.addEventListener("click", function () {
-    console.log(em1);
+    window.location.href = "guideMoreDetails.html";
   });
 
   verifyGuide.addEventListener("click", function () {
@@ -88,10 +97,7 @@ function renderUser(doc) {
   divGuide.appendChild(emailGuide);
   divGuide.appendChild(addressGuide);
   divGuide.appendChild(contactGuide);
-  divGuide.appendChild(countryGuide);
-  divGuide.appendChild(languagesGuide);
   divGuide.appendChild(isVeified12);
-  divGuide.appendChild(licenseGuide);
   divGuide.appendChild(viewGuide);
   divGuide.appendChild(verifyGuide);
   divGuide.appendChild(blankSpace);
@@ -105,11 +111,21 @@ function renderUser(doc) {
 
   row.appendChild(imageCol);
   row.appendChild(detailsCol);
-
-  unverfiedGuides.appendChild(row);
+  row.style.marginLeft = "2%";
+  row.style.marginTop = "2%";
+  card.appendChild(row);
+  unverfiedGuides.appendChild(card);
 }
 
 function renderUser1(doc) {
+  var card = document.createElement("div");
+  card.className = "card";
+  var row = document.createElement("div");
+  row.className = "row";
+  var imageCol = document.createElement("div");
+  imageCol.className = "col-xs-4";
+  var detailsCol = document.createElement("div");
+  detailsCol.className = "col-xs-8";
   let divGuide = document.createElement("div");
   let divImg = document.createElement("div");
   let imgGuide = document.createElement("img");
@@ -135,11 +151,15 @@ function renderUser1(doc) {
   licenseGuide.textContent = "License ID: " + doc.data().licenseId;
   blankSpace.textContent = "     ";
   viewGuide.innerHTML = "View Details";
+  viewGuide.style.marginRight = "10px";
+  viewGuide.style.width = "40%";
   verifyGuide.innerHTML = "Verified";
+  verifyGuide.style.width = "40%";
   imgGuide.src = doc.data().profilePicture;
   imgGuide.style.width = "120px";
   imgGuide.style.height = "180px";
   imgGuide.style.paddingRight = "10px";
+
   const email_ = doc.data().email;
   viewGuide.addEventListener("click", function () {
     console.log(em1);
@@ -159,9 +179,6 @@ function renderUser1(doc) {
   divGuide.appendChild(emailGuide);
   divGuide.appendChild(addressGuide);
   divGuide.appendChild(contactGuide);
-  divGuide.appendChild(countryGuide);
-  divGuide.appendChild(languagesGuide);
-  divGuide.appendChild(licenseGuide);
 
   divGuide.appendChild(viewGuide);
   divGuide.appendChild(verifyGuide);
@@ -171,8 +188,15 @@ function renderUser1(doc) {
   divImg.appendChild(imgGuide);
   divImg.appendChild(hrLine);
 
-  imageDiv_Verified.appendChild(divImg);
-  detailsDiv_Verified.appendChild(divGuide);
+  imageCol.appendChild(divImg);
+  detailsCol.appendChild(divGuide);
+
+  row.appendChild(imageCol);
+  row.appendChild(detailsCol);
+
+  card.appendChild(row);
+
+  verifiedGuides.appendChild(card);
 }
 
 firebase1

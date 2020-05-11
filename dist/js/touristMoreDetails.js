@@ -16,7 +16,7 @@ const firebase1 = firebase.firestore();
 const settings = { /* your settings... */ timestampsInSnapshots: true };
 firebase1.settings(settings);
 
-var emailGuide = localStorage.getItem("guideEmail");
+var emailGuide = localStorage.getItem("touristEmail");
 console.log(emailGuide);
 const guideMoreDetails = document.querySelector("#guidemoredetails");
 
@@ -93,57 +93,6 @@ function renderUser(doc) {
   imgGuide.style.height = "180px";
   imgGuide.style.paddingRight = "10px";
 
-  if (doc.data().isVerified == true) {
-    var icon = document.createElement("span");
-    icon.className = "glyphicon glyphicon-ok";
-    icon.style.color = "black";
-    verifyGuide.appendChild(icon);
-    verifyGuide.innerHTML = "Verified";
-    verifyGuide.style.background = "#D3D3D3";
-    verifyGuide.style.width = "200px";
-    verifyGuide.style.padding = "10px";
-  } else if (doc.data().isVerified == false) {
-    verifyGuide.innerHTML = "Verify";
-    verifyGuide.style.background = "#22a722";
-    verifyGuide.style.width = "200px";
-    verifyGuide.style.padding = "10px";
-  }
-
-  if (doc.data().isVerified == true) {
-    verifyGuide.addEventListener("click", function () {
-      var userVal = confirm("Are you sure you want to unverify this guide?");
-      if (userVal == true) {
-        firebase1.collection("users").doc(doc.id).update({ isVerified: false });
-        verifyGuide.innerHTML = "Verify";
-        _isVerified = true;
-        verifyGuide.style.background = "#22a722";
-      }
-    });
-  } else if (doc.data().isVerified == false) {
-    verifyGuide.addEventListener("click", function () {
-      var userVal = confirm("Are you sure you want to verify this guide?");
-      if (userVal == true) {
-        firebase1.collection("users").doc(doc.id).update({ isVerified: true });
-        var icon = document.createElement("span");
-        icon.className = "glyphicon glyphicon-ok";
-        icon.style.color = "black";
-        verifyGuide.appendChild(icon);
-        verifyGuide.innerHTML = "Verified";
-        _isVerified = true;
-        verifyGuide.style.background = "#D3D3D3";
-      }
-    });
-  }
-
-  frontLicenseCard.appendChild(frontLicenseHeading);
-  frontLicenseCard.appendChild(frontLicense);
-  frontLicenseCol.appendChild(frontLicenseCard);
-  backLicenseCard.appendChild(backLicenseHeading);
-  backLicenseCard.appendChild(backLicense);
-  backLicenseCol.appendChild(backLicenseCard);
-  licenseRow.appendChild(frontLicenseCol);
-  licenseRow.appendChild(backLicenseCol);
-
   divGuide.appendChild(nameGuide);
   divGuide.appendChild(genderGuide);
   divGuide.appendChild(emailGuide);
@@ -151,11 +100,7 @@ function renderUser(doc) {
   divGuide.appendChild(contactGuide);
   divGuide.appendChild(countryGuide);
   divGuide.appendChild(languagesGuide);
-  divGuide.appendChild(professionalDetails);
-  divGuide.appendChild(typeGuide);
-  divGuide.appendChild(licenseGuide);
-  divGuide.appendChild(licenseRow);
-  divGuide.appendChild(isVerifiedGuide);
+
   divGuide.appendChild(ratingGuide);
   divGuide.appendChild(specialityGuide);
   divGuide.appendChild(statusGuide);

@@ -31,7 +31,8 @@
       .card {
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
         padding: 16px;
-        text-align: center;
+        margin-bottom: 20px;
+        width: 600px;
         background-color: #f1f1f1;
       }
     </style>
@@ -45,7 +46,7 @@
 
         <div class="collapse navbar-collapse" id="navbarCollapse1">
           <div class="navbar-nav">
-            <a href="#" class="nav-item nav-link">Home</a>
+            <a href="adminHome.html" class="nav-item nav-link">Home</a>
             <a href="guidePage.html" class="nav-item nav-link">Guides</a>
             <a href="touristPage.html" class="nav-item nav-link active"
               >Tourists</a
@@ -64,7 +65,11 @@
           </form>
           <button
             class="btn btn-primary"
-            style="background-color: rgb(34, 167, 34); padding-left: 20px;"
+            style="
+              background-color: rgb(34, 167, 34);
+              padding-left: 20px;
+              margin-left: 10px;
+            "
             id="logOut"
           >
             Log Out?
@@ -75,7 +80,7 @@
     <div
       class="content"
       id="guideDetails"
-      style="margin-top: 10%; margin-left: 5%;"
+      style="margin-top: 10%; margin-left: 20%; margin-right: 10%;"
     >
       <h3 style="padding-bottom: 2%;">List of Tourists</h3>
       <div id="rowdetails" class="row" style="width: 100%;">

@@ -161,8 +161,9 @@ function renderUser1(doc) {
   imgGuide.style.paddingRight = "10px";
 
   const email_ = doc.data().email;
+  localStorage.setItem("guideEmail", email_);
   viewGuide.addEventListener("click", function () {
-    console.log(em1);
+    window.location.href = "guideMoreDetails.html";
   });
 
   verifyGuide.innerHTML = "Verified";

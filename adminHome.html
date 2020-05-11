@@ -6,7 +6,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
-    <title>HireAGuide Tourists</title>
+    <title>HireAGuide Admin</title>
     <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -23,17 +23,30 @@
 
     <style type="text/css"></style>
     <style>
-      #touristDetails {
-        height: 100vh;
-        width: 100%;
+      html,
+      body {
+        height: 100%;
       }
-
       .card {
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
         padding: 16px;
-        text-align: center;
-        background-color: #f1f1f1;
+
+        background-color: #faf8f8;
       }
+
+      .container-fluid {
+        width: 600px;
+        background: rgb(235, 235, 235);
+
+        padding-top: 10%;
+        padding-bottom: 5%;
+      }
+
+      /* .dltbtn {
+        width: 40px;
+        position: relative;
+        right: 0px;
+      } */
     </style>
   </head>
   <body>
@@ -45,11 +58,9 @@
 
         <div class="collapse navbar-collapse" id="navbarCollapse1">
           <div class="navbar-nav">
-            <a href="#" class="nav-item nav-link">Home</a>
+            <a href="adminHome.html" class="nav-item nav-link active">Home</a>
             <a href="guidePage.html" class="nav-item nav-link">Guides</a>
-            <a href="touristPage.html" class="nav-item nav-link active"
-              >Tourists</a
-            >
+            <a href="touristPage.html" class="nav-item nav-link">Tourists</a>
             <a href="hotelsPage.html" class="nav-item nav-link"
               >Places & Hotels</a
             >
@@ -64,7 +75,11 @@
           </form>
           <button
             class="btn btn-primary"
-            style="background-color: rgb(34, 167, 34); padding-left: 20px;"
+            style="
+              background-color: rgb(34, 167, 34);
+              padding-left: 20px;
+              margin-left: 10px;
+            "
             id="logOut"
           >
             Log Out?
@@ -72,19 +87,9 @@
         </div>
       </nav>
     </div>
-    <div
-      class="content"
-      id="guideDetails"
-      style="margin-top: 10%; margin-left: 5%;"
-    >
-      <h3 style="padding-bottom: 2%;">List of Tourists</h3>
-      <div id="rowdetails" class="row" style="width: 100%;">
-        <div class="col" id="touristDetails"></div>
-        <div class="col" id="moreDetails">
-          <div id="details"></div>
-        </div>
-      </div>
+    <div class="content" id="guideDetails" style="height: 100%;">
+      <div class="container-fluid h-100" id="posts"></div>
     </div>
-    <script src="dist/js/touristPage.js"></script>
+    <script src="dist/js/adminHome.js"></script>
   </body>
 </html>

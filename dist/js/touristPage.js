@@ -22,6 +22,8 @@ const rowDetails = document.querySelector("#rowdetails");
 const touristDetails = document.querySelector("#touristDetails");
 
 function renderUser(doc) {
+  var card = document.createElement("div");
+  card.className = "card";
   var row = document.createElement("div");
   row.className = "row";
   var imageCol = document.createElement("div");
@@ -53,23 +55,20 @@ function renderUser(doc) {
   isVeified12.textContent = "isVerified:" + doc.data().isVerified;
   blankSpace.textContent = "     ";
   viewGuide.innerHTML = "View Details";
+  viewGuide.style.backgroundColor = "#e67e22";
+  viewGuide.style.padding = "10px";
+  viewGuide.style.color = "white";
+  viewGuide.style.fontWeight = "bold";
   verifyGuide.innerHTML = "Verify";
   imgGuide.src = doc.data().profilePicture;
-  imgGuide.style.width = "120px";
+  imgGuide.style.width = "140px";
   imgGuide.style.height = "180px";
   imgGuide.style.paddingRight = "10px";
-  const email_ = doc.data().email;
+
   viewGuide.addEventListener("click", function () {
-    console.log(em1);
-  });
-
-  verifyGuide.addEventListener("click", function () {
-    verifyGuide.innerHTML = "Verified";
-    _isVerified = true;
-
-    firebase1.collection("users").doc(doc.id).update({ isVerified: true });
-    verifyGuide.style.background = "#D3D3D3";
-    XMLHttpRequestUpload();
+    const email_ = doc.data().email;
+    localStorage.setItem("touristEmail", email_);
+    window.location.href = "touristMoreDetails.html";
   });
 
   divGuide.appendChild(nameGuide);
@@ -91,7 +90,9 @@ function renderUser(doc) {
   detailsCol.appendChild(divGuide);
   row.appendChild(imageCol);
   row.appendChild(detailsCol);
-  touristDetails.appendChild(row);
+  row.style.marginLeft = "2%";
+  card.appendChild(row);
+  touristDetails.appendChild(card);
 }
 
 firebase1

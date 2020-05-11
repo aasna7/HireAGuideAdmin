@@ -28,38 +28,42 @@ formLogin.onsubmit = function (e) {
     const emailValue = emailLogin.value;
     const passwordValue = passwordLogin.value;
     const auth = firebase.auth();
-    var emailcheck = firebase1.collection("admin").doc(emailValue);
-    emailcheck.get().then((docSnapshot) => {
-      if (docSnapshot.exists) {
-        emailcheck.onSnapshot((doc) => {
-          firebase
-            .auth()
-            .setPersistence(firebase.auth.Auth.Persistence.LOCAL)
-            .then(function () {
-              return firebase
-                .auth()
-                .signInWithEmailAndPassword(emailValue, passwordValue)
-                .then(function () {
-                  window.location.href = "guidePage.html";
-                })
-                .catch(function (error) {
-                  // Handle Errors here.
-                  alert("Incorrect username or password");
-                  var errorCode = error.code;
-                  var errorMessage = error.message;
-                  console.log(errorMessage);
-                  // ...
-                });
-            })
-            .catch(function (error) {
-              // Handle Errors here.
-              var errorCode = error.code;
-              var errorMessage = error.message;
-            });
-        });
-      } else {
-        window.alert("Incorrect Username or Password");
-      }
-    });
+    if (!emailValue || !passwordValue) {
+      window.alert("Please enter all credentials!");
+    } else {
+      var emailcheck = firebase1.collection("admin").doc(emailValue);
+      emailcheck.get().then((docSnapshot) => {
+        if (docSnapshot.exists) {
+          emailcheck.onSnapshot((doc) => {
+            firebase
+              .auth()
+              .setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+              .then(function () {
+                return firebase
+                  .auth()
+                  .signInWithEmailAndPassword(emailValue, passwordValue)
+                  .then(function () {
+                    window.location.href = "adminHome.html";
+                  })
+                  .catch(function (error) {
+                    // Handle Errors here.
+                    alert("Incorrect username or password");
+                    var errorCode = error.code;
+                    var errorMessage = error.message;
+                    console.log(errorMessage);
+                    // ...
+                  });
+              })
+              .catch(function (error) {
+                // Handle Errors here.
+                var errorCode = error.code;
+                var errorMessage = error.message;
+              });
+          });
+        } else {
+          window.alert("Incorrect Username or Password");
+        }
+      });
+    }
   });
 };

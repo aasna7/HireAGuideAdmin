@@ -24,18 +24,25 @@
 
       input,
       textarea {
-        margin-bottom: 5px;
         width: 100%;
-        display: block;
+        margin-bottom: 5px;
+
         border: 1px solid #999;
         border-radius: 10px;
         padding: 6px 30px;
+      }
+      select {
+        width: 20%;
       }
 
       .form-submit {
         background: rgb(34, 167, 34);
         font-size: 20px;
         color: white;
+      }
+
+      .form-submit:hover {
+        background: rgb(21, 102, 21);
       }
 
       #tab-btn {
@@ -48,9 +55,8 @@
       }
 
       #tab-btn .active {
-        background-color: white;
-        border-bottom: 1px solid yellowgreen;
-        color: rgb(94, 93, 93);
+        background-color: yellowgreen;
+        color: white;
       }
 
       #tab-btn-list {
@@ -63,9 +69,8 @@
       }
 
       #tab-btn-list .active {
-        background-color: white;
-        border-bottom: 1px solid yellowgreen;
-        color: rgb(94, 93, 93);
+        background-color: yellowgreen;
+        color: white;
       }
 
       .hotelslist,
@@ -73,12 +78,14 @@
         display: block;
         width: 100%;
         text-align: center;
-        background-color: yellowgreen;
-        color: white;
-        font-size: 25px;
+
+        font-size: 20px;
         text-decoration: none;
         padding: 6px 20px;
         margin-bottom: 2%;
+        background-color: white;
+        border-bottom: 1px solid yellowgreen;
+        color: rgb(94, 93, 93);
       }
 
       .addhotel,
@@ -86,12 +93,14 @@
         display: block;
         width: 100%;
         text-align: center;
-        background-color: yellowgreen;
-        color: white;
-        font-size: 25px;
+
+        font-size: 20px;
         text-decoration: none;
         padding: 6px 20px;
         margin-bottom: 2%;
+        background-color: white;
+        border-bottom: 1px solid yellowgreen;
+        color: rgb(94, 93, 93);
       }
       a:hover {
         text-decoration: none;
@@ -109,8 +118,28 @@
       .card {
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
         padding: 16px;
+        margin-bottom: 10px;
 
         background-color: #f1f1f1;
+      }
+
+      .editplace-form {
+        display: none;
+      }
+
+      .edithotel-form {
+        display: none;
+      }
+
+      .form-edit {
+        background: rgb(34, 167, 34);
+        font-size: 20px;
+        color: white;
+      }
+      .form-cancel {
+        background: rgb(196, 41, 41);
+        font-size: 20px;
+        color: white;
       }
     </style>
     <script src="https://www.gstatic.com/firebasejs/5.5.3/firebase-app.js"></script>
@@ -159,7 +188,7 @@
 
         <div class="collapse navbar-collapse" id="navbarCollapse1">
           <div class="navbar-nav">
-            <a href="#" class="nav-item nav-link">Home</a>
+            <a href="adminHome.html" class="nav-item nav-link">Home</a>
             <a href="guidePage.html" class="nav-item nav-link">Guides</a>
             <a href="touristPage.html" class="nav-item nav-link">Tourists</a>
             <a href="hotelsPage.html" class="nav-item nav-link active"
@@ -176,7 +205,11 @@
           </form>
           <button
             class="btn btn-primary"
-            style="background-color: rgb(34, 167, 34); padding-left: 20px;"
+            style="
+              background-color: rgb(34, 167, 34);
+              padding-left: 20px;
+              margin-left: 10px;
+            "
             id="logOut"
           >
             Log Out?
@@ -191,27 +224,33 @@
           margin-left: 2%;
           margin-right: 2%;
           border-right: 1px solid black;
-          overflow-y: scroll;
+          overflow: auto;
           height: 100%;
         "
       >
         <div class="hotelsplaces" style="margin-top: 15%;">
-          <h3>Hotels and Places</h3>
           <div id="tab-btn-list">
             <a href="#" class="hotelslist active">Hotels</a>
             <a href="#" class="placeslist">Places</a>
           </div>
 
           <div class="listofhotels">
-            <div id="listofhotels_"></div>
+            <div
+              id="listofhotels_"
+              style="font-size: 13px; margin-right: 2%;"
+            ></div>
           </div>
           <div class="listofplaces">
-            <div id="listofplaces_"></div>
+            <div
+              id="listofplaces_"
+              style="font-size: 13px; margin-right: 2%;"
+            ></div>
           </div>
         </div>
       </div>
       <div
         class="col"
+        id="secondCol"
         style="margin-left: 2%; margin-right: 2%; overflow: hidden;"
       >
         <div class="addhotelsplaces" style="margin-top: 15%;">
@@ -241,9 +280,34 @@
               required
             />
             <br />
+            <input
+              type="text"
+              name="hotelphone"
+              id="hotel_phone"
+              placeholder="Enter Hotel Phone No."
+              required
+            />
+            <br />
+            <input
+              type="text"
+              name="hotelprice"
+              id="hotel_price"
+              placeholder="Enter Hotel Price per room"
+              required
+            />
+            <br />
+            <label for="hotel_ratings">Rate the hotel: </label>
+            <select id="hotel_ratings">
+              <option value="1" selected>1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select>
+            <br />
             <textarea
               id="hotel_description"
-              rows="4"
+              rows="3"
               cols="30"
               placeholder="Enter Hotel Description"
               required
@@ -251,11 +315,7 @@
             <br />
 
             <input type="file" id="hotel_image" />
-            <img
-              src="#"
-              id="hoteldemoimage"
-              style="width:120px';height:160px"
-            />
+
             <br />
             <input
               type="submit"
@@ -288,9 +348,35 @@
               required
             />
             <br />
+            <input
+              type="text"
+              name="placephone"
+              id="place_phone"
+              placeholder="Enter Place Phone No."
+              required
+            />
+            <br />
+            <input
+              type="text"
+              name="placeprice"
+              id="place_price"
+              placeholder="Enter Place Price"
+              required
+            />
+            <br />
+            <label for="place_ratings">Rate the place: </label>
+            <select id="place_ratings">
+              <option value="1" selected>1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select>
+            <br />
+
             <textarea
               id="place_description"
-              rows="4"
+              rows="3"
               cols="30"
               placeholder="Enter Place Description"
               required
@@ -306,6 +392,155 @@
               value="Add Place"
             />
           </div>
+        </div>
+        <div class="edithotel-form" style="margin-top: 15%;">
+          <h3 style="margin-bottom: 5px;">
+            Edit Hotel Details
+          </h3>
+
+          <input
+            type="text"
+            name="hotelnameedit"
+            id="hotel_nameedit"
+            placeholder="Enter Hotel Name"
+            required
+            autofocus
+          /><br />
+
+          <input
+            type="text"
+            name="hotellocationedit"
+            id="hotel_locationedit"
+            placeholder="Enter Hotel Location"
+            required
+          />
+          <br />
+          <input
+            type="text"
+            name="hotelphoneedit"
+            id="hotel_phoneedit"
+            placeholder="Enter Hotel Phone No."
+            required
+          />
+          <br />
+          <input
+            type="text"
+            name="hotelpriceedit"
+            id="hotel_priceedit"
+            placeholder="Enter Hotel Price per room"
+            required
+          />
+          <br />
+          <label for="hotel_ratingsedit">Rate the hotel: </label>
+          <select id="hotel_ratingsedit">
+            <option value="1" selected>1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+          <br />
+          <textarea
+            id="hotel_descriptionedit"
+            rows="3"
+            cols="30"
+            placeholder="Enter Hotel Description"
+            required
+          ></textarea>
+          <br />
+
+          <input type="file" id="hotel_imageedit" />
+
+          <br />
+          <input
+            type="submit"
+            name="edithotelbtn"
+            id="edithotelbtn"
+            class="form-edit"
+            value="Save"
+          />
+          <input
+            type="button"
+            name="cancelhotelbtn"
+            id="cancelhotelbtn"
+            class="form-cancel"
+            value="Cancel"
+          />
+        </div>
+        <div class="editplace-form" style="margin-top: 15%;">
+          <h3 style="margin-bottom: 5px;">
+            Edit Place Details
+          </h3>
+
+          <input
+            type="text"
+            name="placenameedit"
+            id="place_nameedit"
+            placeholder="Enter Place Name"
+            required
+            autofocus
+          /><br />
+
+          <input
+            type="text"
+            name="placelocationedit"
+            id="place_locationedit"
+            placeholder="Enter Place Location"
+            required
+          />
+          <br />
+          <input
+            type="text"
+            name="placephoneedit"
+            id="place_phoneedit"
+            placeholder="Enter Place Phone No."
+            required
+          />
+          <br />
+          <input
+            type="text"
+            name="placepriceedit"
+            id="place_priceedit"
+            placeholder="Enter Place Price"
+            required
+          />
+          <br />
+          <label for="place_ratingsedit">Rate the Place: </label>
+          <select id="place_ratingsedit">
+            <option value="1" selected>1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+          <br />
+
+          <textarea
+            id="place_descriptionedit"
+            rows="3"
+            cols="30"
+            placeholder="Enter Place Description"
+            required
+          ></textarea>
+          <br />
+
+          <input type="file" id="place_imageedit" />
+
+          <br />
+          <input
+            type="submit"
+            name="editplacebtn"
+            id="editplacebtn"
+            class="form-edit"
+            value="Save"
+          />
+          <input
+            type="button"
+            name="cancelplacebtn"
+            id="cancelplacebtn"
+            class="form-cancel"
+            value="Cancel"
+          />
         </div>
       </div>
     </div>

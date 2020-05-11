@@ -62,6 +62,7 @@ function renderUser(doc) {
   let hotelDescriptionList = document.createElement("p");
   let editHotelDetails = document.createElement("button");
   let deleteHotelDetails = document.createElement("button");
+  hotelDescriptionList.style.textAlign = "justify";
   let brLine = document.createElement("br");
   let hrLine = document.createElement("hr");
   hotelNameList.textContent = "Hotel Name: " + doc.data().name;
@@ -76,10 +77,14 @@ function renderUser(doc) {
   editHotelDetails.style.marginRight = "10px";
   editHotelDetails.style.width = "80px";
   editHotelDetails.style.height = "30px";
+  editHotelDetails.style.backgroundColor = "#22a722";
+  editHotelDetails.style.color = "white";
   deleteHotelDetails.innerHTML = "Delete";
   deleteHotelDetails.style.fontWeight = "bold";
   deleteHotelDetails.style.width = "80px";
   deleteHotelDetails.style.height = "30px";
+  deleteHotelDetails.style.backgroundColor = "red";
+  deleteHotelDetails.style.color = "white";
   imgHotelList.src = doc.data().images[0];
   imgHotelList.style.width = "120px";
   imgHotelList.style.height = "140px";
@@ -215,7 +220,20 @@ function renderUser1(doc) {
   placeRatingsList.textContent = "Rating: " + doc.data().rating;
   editPlaceDetails.innerHTML = "Edit";
   editPlaceDetails.style.marginRight = "10px";
+  editPlaceDetails.style.fontWeight = "bold";
+  editPlaceDetails.style.width = "80px";
+  editPlaceDetails.style.height = "30px";
+  editPlaceDetails.style.backgroundColor = "#22a722";
+  editPlaceDetails.style.color = "white";
   deletePlaceDetails.innerHTML = "Delete";
+  deletePlaceDetails.style.fontWeight = "bold";
+  deletePlaceDetails.style.width = "80px";
+  deletePlaceDetails.style.height = "30px";
+  deletePlaceDetails.style.backgroundColor = "red";
+  deletePlaceDetails.style.color = "white";
+
+  placeDescriptionList.style.textAlign = "justify";
+
   imgPlaceList.src = doc.data().images[0];
   imgPlaceList.style.width = "120px";
   imgPlaceList.style.height = "140px";

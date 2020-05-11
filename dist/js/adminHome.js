@@ -40,6 +40,10 @@ function renderUser(doc) {
   console.log(time);
   console.log(time.toDateString());
 
+  imgGuide.src = doc.data().image;
+  imgGuide.style.width = "140px";
+  imgGuide.style.height = "180px";
+  imgGuide.style.paddingRight = "10px";
   postGuide.textContent = doc.data().post;
   userGuide.textContent = doc.data().userId;
   console.log(
@@ -87,9 +91,12 @@ function renderUser(doc) {
 
   divGuide.appendChild(dateGuide);
   divGuide.appendChild(dltBtn);
+  divImg.appendChild(imgGuide);
 
+  imageCol.appendChild(divImg);
   detailsCol.appendChild(divGuide);
 
+  row.appendChild(imageCol);
   row.appendChild(detailsCol);
   row.style.marginLeft = "10px";
   card.appendChild(row);

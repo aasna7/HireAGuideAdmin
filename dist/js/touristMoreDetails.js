@@ -21,6 +21,8 @@ console.log(emailGuide);
 const guideMoreDetails = document.querySelector("#guidemoredetails");
 
 function renderUser(doc) {
+  var card = document.createElement("div");
+  card.className = "card-all";
   var row = document.createElement("div");
   row.className = "row";
   var imageCol = document.createElement("div");
@@ -116,8 +118,12 @@ function renderUser(doc) {
 
   row.appendChild(imageCol);
   row.appendChild(detailsCol);
+  row.style.marginLeft = "2%";
+  row.style.marginTop = "2%";
 
-  guideMoreDetails.appendChild(row);
+  card.appendChild(row);
+
+  guideMoreDetails.appendChild(card);
 }
 
 firebase1

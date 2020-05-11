@@ -64,12 +64,13 @@ function renderUser(doc) {
   licenseGuide.textContent = "License ID: " + doc.data().licenseId;
   viewGuide.innerHTML = "View Details";
   viewGuide.style.marginRight = "10px";
-  viewGuide.style.width = "40%";
-  viewGuide.style.padding = "5px";
+  viewGuide.style.backgroundColor = "#e67e22";
+  viewGuide.style.padding = "10px";
+  viewGuide.style.color = "white";
   verifyGuide.innerHTML = "Verify";
-  verifyGuide.style.padding = "5px";
-  verifyGuide.style.width = "40%";
+  verifyGuide.style.padding = "10px";
   verifyGuide.style.background = "#22a722";
+  verifyGuide.style.color = "white";
   imgGuide.src = doc.data().profilePicture;
   imgGuide.style.width = "140px";
   imgGuide.style.height = "180px";
@@ -89,7 +90,7 @@ function renderUser(doc) {
 
       firebase1.collection("users").doc(doc.id).update({ isVerified: true });
       verifyGuide.style.background = "#D3D3D3";
-      XMLHttpRequestUpload();
+      verifyGuide.style.color = "black";
     }
   });
 
@@ -152,9 +153,12 @@ function renderUser1(doc) {
   blankSpace.textContent = "     ";
   viewGuide.innerHTML = "View Details";
   viewGuide.style.marginRight = "10px";
-  viewGuide.style.width = "40%";
+  viewGuide.style.backgroundColor = "#e67e22";
+  viewGuide.style.padding = "10px";
+  viewGuide.style.color = "white";
+
   verifyGuide.innerHTML = "Verified";
-  verifyGuide.style.width = "40%";
+  verifyGuide.style.padding = "10px";
   imgGuide.src = doc.data().profilePicture;
   imgGuide.style.width = "120px";
   imgGuide.style.height = "180px";
@@ -170,10 +174,13 @@ function renderUser1(doc) {
   verifyGuide.style.background = "#D3D3D3";
 
   verifyGuide.addEventListener("click", function () {
-    verifyGuide.innerHTML = "Verified";
-
-    firebase1.collection("users").doc(doc.id).update({ isVerified: false });
-    verifyGuide.style.background = "#D3D3D3";
+    var userVal = confirm("Are you sure you want to unverify this guide?");
+    if (userVal == true) {
+      firebase1.collection("users").doc(doc.id).update({ isVerified: false });
+      verifyGuide.innerHTML = "Verify";
+      _isVerified = true;
+      verifyGuide.style.background = "#22a722";
+    }
   });
 
   divGuide.appendChild(nameGuide);

@@ -175,6 +175,7 @@ function renderUser(doc) {
   row.appendChild(detailsCol);
   row.appendChild(hrLine);
   row.style.marginLeft = "10px";
+  row.style.marginRight = "10px";
   card.appendChild(row);
   hotelList.appendChild(card);
 }

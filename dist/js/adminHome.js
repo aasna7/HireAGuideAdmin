@@ -40,18 +40,17 @@ function renderUser(doc) {
   console.log(time);
   console.log(time.toDateString());
 
-  imgGuide.src = doc.data().image;
-  imgGuide.style.width = "140px";
-  imgGuide.style.height = "180px";
-  imgGuide.style.paddingRight = "10px";
+  if (doc.data().image == "") {
+    imgGuide.style.display = "none";
+  } else {
+    imgGuide.src = doc.data().image;
+    imgGuide.style.width = "140px";
+    imgGuide.style.height = "180px";
+    imgGuide.style.paddingRight = "10px";
+  }
+
   postGuide.textContent = doc.data().post;
   userGuide.textContent = doc.data().userId;
-  console.log(
-    "New Data -> " +
-      referenceData(doc.data().userId).then((value) => {
-        console.log(value);
-      })
-  );
 
   dateGuide.style.fontSize = "10px";
   dateGuide.textContent = "Posted on: " + time.toDateString();
@@ -66,13 +65,14 @@ function renderUser(doc) {
       let collectionRef = firebase1.collection("posts");
 
       collectionRef
-        .doc(doc.id)
+        .where("postId", "==", doc.data().postId)
         .get()
         .then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
             doc.ref
               .delete()
               .then(() => {
+                window.alert("Post deleted successfully!");
                 console.log("Document successfully deleted!");
                 window.location.href = "adminHome.html";
               })
@@ -100,13 +100,9 @@ function renderUser(doc) {
   row.appendChild(detailsCol);
   row.style.marginLeft = "10px";
   card.appendChild(row);
+  card.style.marginBottom = "20px";
 
   posts.appendChild(card);
-}
-
-async function referenceData(documentReference) {
-  reference = await documentReference.get();
-  return reference.data;
 }
 
 firebase1

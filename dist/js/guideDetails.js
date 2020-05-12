@@ -76,9 +76,10 @@ function renderUser(doc) {
   imgGuide.style.height = "180px";
   imgGuide.style.paddingRight = "20px";
   imageCol.style.paddingRight = "10px";
-  const email_ = doc.data().email;
-  localStorage.setItem("guideEmail", email_);
+
   viewGuide.addEventListener("click", function () {
+    const email_ = doc.data().email;
+    localStorage.setItem("guideEmail", email_);
     window.location.href = "guideMoreDetails.html";
   });
 
@@ -160,13 +161,13 @@ function renderUser1(doc) {
   verifyGuide.innerHTML = "Verified";
   verifyGuide.style.padding = "10px";
   imgGuide.src = doc.data().profilePicture;
-  imgGuide.style.width = "120px";
+  imgGuide.style.width = "140px";
   imgGuide.style.height = "180px";
   imgGuide.style.paddingRight = "10px";
 
-  const email_ = doc.data().email;
-  localStorage.setItem("guideEmail", email_);
   viewGuide.addEventListener("click", function () {
+    const email_ = doc.data().email;
+    localStorage.setItem("guideEmail", email_);
     window.location.href = "guideMoreDetails.html";
   });
 
@@ -201,6 +202,8 @@ function renderUser1(doc) {
 
   row.appendChild(imageCol);
   row.appendChild(detailsCol);
+  row.style.marginLeft = "2%";
+  row.style.marginTop = "2%";
 
   card.appendChild(row);
 
